@@ -26,3 +26,7 @@ __pycache__/
 venv/
 
 node_modules/
+api/node_modules/
+api/*.sqlite
+api/*.sqlite-shm
+api/*.sqlite-wal
