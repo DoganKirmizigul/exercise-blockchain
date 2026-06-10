@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Environment / secrets
+.env
+
+# SQLite database
+*.db
+
+# Git submodules (managed by Forge)
+.gitmodules
+lib/
+
+# Forge build artifacts and libraries
+contracts/lib/
+contracts/out/
+contracts/cache/
+contracts/broadcast/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
