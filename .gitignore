@@ -7,6 +7,9 @@
 
 # SQLite database
 *.db
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
 
 # Git submodules (managed by Forge)
 .gitmodules
@@ -27,3 +30,4 @@ venv/
 
 node_modules/
 frontend/node_modules/
+api/node_modules/
