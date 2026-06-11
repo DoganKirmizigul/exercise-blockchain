@@ -1,16 +1,12 @@
 # NFT Ticketing Platform A decentralized ticketing platform built on Ethereum. Users can buy event tickets as NFTs, either directly on-chain with ETH or via a fiat payment flow.
 
 
+## Stack
 
-## Stack 
-**Smart Contracts**
-  - Solidity, Forge, OpenZeppelin ERC721
-**Backend**
-  - Node.js, Express, SQLite, Web3.js 
-**Frontend**
-  — React, Vite, CSS Modules, Ethers.js
-**Storage**
-  — IPFS via Pinata
+- **Smart Contracts** : Solidity, Forge, OpenZeppelin ERC721
+- **Backend** : Node.js, Express, SQLite, Web3.js
+- **Frontend** : React, Vite, CSS Modules, Ethers.js
+- **Storage** : IPFS via Pinata
 
 
 
