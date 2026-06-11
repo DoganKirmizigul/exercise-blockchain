@@ -1,0 +1,21 @@
+.footer {
+  width: 100%;
+  padding: 24px 40px;
+  background-color: var(--color-navbar-bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.left {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-navbar-text-active);
+  letter-spacing: -0.3px;
+}
+
+.right {
+  font-size: 13px;
+  color: var(--color-navbar-text);
+}

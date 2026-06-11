@@ -7,6 +7,9 @@
 
 # SQLite database
 *.db
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
 
 # Git submodules (managed by Forge)
 .gitmodules
@@ -26,7 +29,5 @@ __pycache__/
 venv/
 
 node_modules/
+frontend/node_modules/
 api/node_modules/
-api/*.sqlite
-api/*.sqlite-shm
-api/*.sqlite-wal
