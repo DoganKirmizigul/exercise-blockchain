@@ -27,8 +27,7 @@ class PurchasesService {
   try {
     const { tx_hash, token_id } = await this.blockchain.mintForBuyer(
       category.contract_address,
-      buyer_wallet_address,
-      category.price_eth
+      buyer_wallet_address
     );
 
     //payment succeeded => confirm purchase and decrement supply
