@@ -99,7 +99,7 @@ export default function Cart() {
         </button>
         <button
           className={styles.checkoutEth}
-          onClick={() => {/* P4 will handle ETH checkout */}}
+          onClick={() => navigate('/checkout-eth')}
         >
           Pay in ETH — {totalEth} ETH
         </button>

@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Wallet, Ticket } from 'lucide-react'
+import { BrowserProvider } from 'ethers'
 import { getTicketsByWallet } from '../../services/api'
 import styles from './MyTickets.module.css'
 
 export default function MyTickets() {
   const navigate = useNavigate()
-
-  // Will be replaced by useAccount() from Wagmi once P4 sets it up
-  const walletAddress = null
+  const [walletAddress, setWalletAddress] = useState(null)
 
   const [tickets, setTickets] = useState([])
   const [loading, setLoading] = useState(false)
@@ -44,8 +43,13 @@ export default function MyTickets() {
           <p className={styles.notConnectedText}>
             You need to connect your Ethereum wallet to view your tickets.
           </p>
-          {/* P4 will replace this button with Wagmi connect */}
-          <button className={styles.connectButton}>
+          <button className={styles.connectButton} onClick={async () => {
+            if (!window.ethereum) return alert('MetaMask not found.')
+            const provider = new BrowserProvider(window.ethereum)
+            await provider.send('eth_requestAccounts', [])
+            const signer = await provider.getSigner()
+            setWalletAddress(await signer.getAddress())
+          }}>
             Connect Wallet
           </button>
         </div>

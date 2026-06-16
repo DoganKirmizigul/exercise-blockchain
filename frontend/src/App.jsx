@@ -5,6 +5,7 @@ import EventList from './pages/EventList/EventList'
 import EventDetail from './pages/EventDetail/EventDetail'
 import Cart from './pages/Cart/Cart'
 import Checkout from './pages/Checkout/Checkout'
+import CheckoutEth from './pages/CheckoutEth/CheckoutEth'
 import MyTickets from './pages/MyTickets/MyTickets'
 import Admin from './pages/Admin/Admin'
 import styles from './App.module.css'
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/events/:id" element={<EventDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout-eth" element={<CheckoutEth />} />
           <Route path="/my-tickets" element={<MyTickets />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>

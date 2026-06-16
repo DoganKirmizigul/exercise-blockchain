@@ -60,9 +60,10 @@ export function CartProvider({ children }) {
     (sum, item) => sum + item.price_eur * item.quantity, 0
   )
 
-  const totalEth = cartItems.reduce(
-    (sum, item) => sum + parseFloat(item.price_eth) * item.quantity, 0
-  ).toFixed(4)
+  const totalEth = cartItems.reduce((sum, item) => {
+    const price = parseFloat(item.price_eth) || 0
+    return sum + price * item.quantity
+  }, 0).toPrecision(6).replace(/\.?0+$/, '') || '0'
 
   return (
     <CartContext.Provider value={{

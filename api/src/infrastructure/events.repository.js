@@ -68,6 +68,12 @@ class EventsRepository {
         `).run(status, token_id ?? null, tx_hash ?? null, id);
         return this.db.prepare('SELECT * FROM purchases WHERE id = ?').get(id);
         }
+    decrementSupply(categoryId) {
+        this.db
+            .prepare('UPDATE ticket_categories SET max_supply = max_supply - 1 WHERE id = ? AND max_supply > 0')
+            .run(categoryId);
+    }
+
         updateContractAddress(categoryId, contract_address) {
         this.db
             .prepare('UPDATE ticket_categories SET contract_address = ? WHERE id = ?')

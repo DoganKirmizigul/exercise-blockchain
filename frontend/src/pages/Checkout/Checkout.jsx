@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, CheckCircle, CreditCard } from 'lucide-react'
+import { ArrowLeft, CheckCircle, CreditCard, Wallet } from 'lucide-react'
+import { BrowserProvider } from 'ethers'
 import { useCart } from '../../context/CartContext'
 import { payWithEur } from '../../services/api'
 import styles from './Checkout.module.css'
@@ -11,7 +12,6 @@ const INITIAL_FORM = {
   cardName: '',
   expiry: '',
   cvv: '',
-  walletAddress: '',
 }
 
 const INITIAL_ERRORS = {
@@ -19,7 +19,6 @@ const INITIAL_ERRORS = {
   cardName: '',
   expiry: '',
   cvv: '',
-  walletAddress: '',
 }
 
 export default function Checkout() {
@@ -30,6 +29,15 @@ export default function Checkout() {
   const [errors, setErrors] = useState(INITIAL_ERRORS)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [walletAddress, setWalletAddress] = useState(null)
+
+  const connectWallet = async () => {
+    if (!window.ethereum) return alert('MetaMask not found.')
+    const provider = new BrowserProvider(window.ethereum)
+    await provider.send('eth_requestAccounts', [])
+    const signer = await provider.getSigner()
+    setWalletAddress(await signer.getAddress())
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -57,23 +65,20 @@ export default function Checkout() {
       newErrors.cvv = 'CVV must be 3 or 4 digits'
       isValid = false
     }
-    if (!form.walletAddress.startsWith('0x') || form.walletAddress.length !== 42) {
-      newErrors.walletAddress = 'Invalid Ethereum address'
-      isValid = false
-    }
 
     setErrors(newErrors)
     return isValid
   }
 
   const handleSubmit = async () => {
+    if (!walletAddress) return alert('Please connect your wallet first.')
     if (!validate()) return
 
     setLoading(true)
     try {
       for (const item of cartItems) {
         await payWithEur(item.event_id, item.category_id, {
-          buyer_wallet_address: form.walletAddress,
+          buyer_wallet_address: walletAddress,
           card_number: form.cardNumber,
           expiry: form.expiry,
           cvv: form.cvv,
@@ -139,21 +144,16 @@ export default function Checkout() {
 
       <div className={styles.section}>
         <p className={styles.sectionTitle}>Wallet Address</p>
-        <div className={styles.field}>
-          <label className={styles.label}>
-            Ethereum wallet address (your tickets will be sent here)
-          </label>
-          <input
-            className={`${styles.input} ${errors.walletAddress ? styles.inputError : ''}`}
-            name="walletAddress"
-            placeholder="0x..."
-            value={form.walletAddress}
-            onChange={handleChange}
-          />
-          {errors.walletAddress && (
-            <span className={styles.errorText}>{errors.walletAddress}</span>
-          )}
-        </div>
+        {walletAddress ? (
+          <p style={{ fontSize: 14, color: 'var(--color-text-secondary)', wordBreak: 'break-all' }}>
+            ✓ {walletAddress}
+          </p>
+        ) : (
+          <button className={styles.connectButton} onClick={connectWallet}>
+            <Wallet size={16} />
+            Connect MetaMask
+          </button>
+        )}
       </div>
 
       <div className={styles.section}>
